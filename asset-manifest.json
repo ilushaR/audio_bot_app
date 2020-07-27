@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/audio_bot_app/static/css/main.f63d6529.chunk.css",
-    "main.js": "/audio_bot_app/static/js/main.19e96874.chunk.js",
-    "main.js.map": "/audio_bot_app/static/js/main.19e96874.chunk.js.map",
+    "main.js": "/audio_bot_app/static/js/main.68aa9389.chunk.js",
+    "main.js.map": "/audio_bot_app/static/js/main.68aa9389.chunk.js.map",
     "runtime-main.js": "/audio_bot_app/static/js/runtime-main.9fdd43eb.js",
     "runtime-main.js.map": "/audio_bot_app/static/js/runtime-main.9fdd43eb.js.map",
     "static/css/2.1e562f28.chunk.css": "/audio_bot_app/static/css/2.1e562f28.chunk.css",
     "static/js/2.d88e6dd4.chunk.js": "/audio_bot_app/static/js/2.d88e6dd4.chunk.js",
     "static/js/2.d88e6dd4.chunk.js.map": "/audio_bot_app/static/js/2.d88e6dd4.chunk.js.map",
     "index.html": "/audio_bot_app/index.html",
-    "precache-manifest.f9f41879092870a3f3e70907a008ed31.js": "/audio_bot_app/precache-manifest.f9f41879092870a3f3e70907a008ed31.js",
+    "precache-manifest.d593f71e2a36e9ef45c17926feee4f83.js": "/audio_bot_app/precache-manifest.d593f71e2a36e9ef45c17926feee4f83.js",
     "service-worker.js": "/audio_bot_app/service-worker.js",
     "static/css/2.1e562f28.chunk.css.map": "/audio_bot_app/static/css/2.1e562f28.chunk.css.map",
     "static/css/main.f63d6529.chunk.css.map": "/audio_bot_app/static/css/main.f63d6529.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.1e562f28.chunk.css",
     "static/js/2.d88e6dd4.chunk.js",
     "static/css/main.f63d6529.chunk.css",
-    "static/js/main.19e96874.chunk.js"
+    "static/js/main.68aa9389.chunk.js"
   ]
 }

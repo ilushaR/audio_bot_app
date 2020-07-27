@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9702b62e0371f39074de273d13c414ef",
+    "revision": "db76e37f9ae5e21d44899cdf4e8ea359",
     "url": "/audio_bot_app/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/audio_bot_app/static/css/2.1e562f28.chunk.css"
   },
   {
-    "revision": "c522ce0d6ac7fac5d47c",
+    "revision": "c694a1922e18a40ec0db",
     "url": "/audio_bot_app/static/css/main.f63d6529.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/audio_bot_app/static/js/2.d88e6dd4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c522ce0d6ac7fac5d47c",
-    "url": "/audio_bot_app/static/js/main.19e96874.chunk.js"
+    "revision": "c694a1922e18a40ec0db",
+    "url": "/audio_bot_app/static/js/main.68aa9389.chunk.js"
   },
   {
     "revision": "33fb1dddd933644e746f",
