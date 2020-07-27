@@ -95,7 +95,7 @@ class App extends React.Component {
 									before={
 										<Card 
 											size={"m"} 
-											style={{ width: 40, height: 40, marginRight: 10, background: `url(${ track.album ? track.album.thumb.photo_68 : this.icon}) no-repeat center #e5ebf1`, backgroundSize: 'cover'}} 
+											style={{ width: 40, height: 40, marginRight: 10, background: `url(${ track.album && track.album.thumb ? track.album.thumb.photo_68 : this.icon}) no-repeat center #e5ebf1`, backgroundSize: 'cover'}} 
 										/>
 									} 
 									after={ <Checkbox data-track={JSON.stringify({ index, url: track.url, title: track.title, artist: track.artist })} onChange={ this.onCheckboxChange }/> } 
