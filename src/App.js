@@ -1,6 +1,7 @@
 import React from 'react';
 import bridge from '@vkontakte/vk-bridge';
-import { View, Panel, PanelHeader, Div, Card, SimpleCell, Checkbox, ConfigProvider, FixedLayout, Button, Separator, PanelHeaderButton, ModalRoot, ModalCard  } from '@vkontakte/vkui';
+import { View, Panel, PanelHeader, Div, Card, SimpleCell, Checkbox, ConfigProvider, FixedLayout, Button, Separator, PanelHeaderButton, ModalRoot, ModalCard, Snackbar, Avatar } from '@vkontakte/vkui';
+import Icon16Done from '@vkontakte/icons/dist/16/done';
 import '@vkontakte/vkui/dist/vkui.css';
 import './App.css';
 
@@ -18,13 +19,28 @@ class App extends React.Component {
 		this.state = {
 			scheme: 'bright_light',
 			tracks: [],
-            activeModal: null
+            activeModal: null,
+            snackbar: null, 
+            isShowButton: false,
 		};
 	}
+
+    setSnackbar = () => {
+        this.setState({ snackbar:
+        <Snackbar
+            layout="vertical"
+            onClose={() => this.setState({ snackbar: null })}
+            before={<Avatar size={24} style={{ backgroundColor: 'var(--accent)' }}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
+        >
+            Музыка отправилась. Приятного прослушивания 🎧
+        </Snackbar>
+        });
+    }
 
 	onCheckboxChange = (e) => {
 		const track = JSON.parse(e.currentTarget.dataset.track);
 		this.pickedTracks[track.index] = this.pickedTracks[track.index] ? null : { url: track.url, title: track.title, artist: track.artist };
+        this.setState({ isShowButton: !!this.filteredPickedTracks().length })
 	}
 
 	sendTracks = async () => {
@@ -37,21 +53,16 @@ class App extends React.Component {
             return this.setActiveModal('TelegramAuth');
         }
 
-		this.pickedTracks = this.pickedTracks.filter(track => !!track);
+		const filteredPickedTracks = this.filteredPickedTracks();
 		
-		if (!this.pickedTracks.length) {
-			// modal 'please pick tracks'
-			return;
-		}
-
-		// accept choice
+        this.setSnackbar();
 
 		fetch(`${this.API_URL}/sendTracks?id=${this.telegramId}`, {
 			method: 'POST',
 			headers: {
 		  		'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(this.pickedTracks),
+			body: JSON.stringify(filteredPickedTracks),
 		})
 	}
 
@@ -59,36 +70,35 @@ class App extends React.Component {
         this.setState({ activeModal });
     };
 
+    filteredPickedTracks = () => {
+        return this.pickedTracks.filter(track => !!track)
+    }
+
 	async componentDidMount() {
 		bridge.subscribe(async ({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
 				this.setState({ scheme: data.scheme });
 			} else if (type === 'VKWebAppInitResult') {
 				this.vkId = (await bridge.send("VKWebAppGetUserInfo", {})).id;
-				this.telegramId = (await bridge.send('VKWebAppStorageGet', {keys: ['telegramId']})).keys[0].value;
-                console.log(this.telegramId);
+				const telegramId = (await bridge.send('VKWebAppStorageGet', {keys: ['telegramId']})).keys[0].value;
+                console.log(telegramId);
 
                 const response = await fetch(`${this.API_URL}/getUser?id=${this.vkId}`).then(res => res.json());
-                console.log(response);
                 const permission = response.permission;
+                this.telegramId = response.telegramId;
+                console.log(this.telegramId);
 
                 if (!permission) {
                     await bridge.send('VKWebAppJoinGroup', {'group_id': 184374271});
-                    // ask to auth
-                    // return
                 }
 
-				if (!this.telegramId || this.telegramId === 'false') {
-					console.log(response);
-					this.telegramId = response.telegramId;
+                if (telegramId === 'null' && this.telegramId) {
+					await bridge.send('VKWebAppStorageSet', { key: 'telegramId', value: `${this.telegramId}` });
+                }
 
-					if (!this.telegramId) {
-                        this.hash = (await fetch(`${this.API_URL}/getHash?id=${this.vkId}`).then(res => res.json())).hash;
-                        return this.setActiveModal('TelegramAuth');
-					}
-
-					const res = await bridge.send('VKWebAppStorageSet', { key: 'telegramId', value: `${this.telegramId}` })
-					console.log(res);
+				if (!this.telegramId) {
+                    this.hash = (await fetch(`${this.API_URL}/getHash?id=${this.vkId}`).then(res => res.json())).hash;
+                    this.setActiveModal('TelegramAuth');
 				}
 
 				fetch(`${this.API_URL}/getTracks?id=${this.vkId}`)
@@ -152,10 +162,17 @@ class App extends React.Component {
 								</SimpleCell>
 							</Div>)
 						)}
+                        { this.state.isShowButton && 
 						<FixedLayout vertical='bottom'>
 							<Separator wide />
-							<Button onClick={ this.sendTracks } size='xl'>Скачать</Button>
-						</FixedLayout>
+							<Button 
+                                onClick={ this.sendTracks } 
+                                size='xl'
+                            >
+                                Скачать
+                            </Button>
+						</FixedLayout> }
+                        { this.state.snackbar }
 					</Panel>
 				</View>
 			</ConfigProvider>
