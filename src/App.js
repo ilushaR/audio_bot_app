@@ -35,7 +35,7 @@ class App extends React.Component {
 
 		// accept choice
 
-		fetch(`${API_URL}/sendTracks?id=${this.telegramId}`, {
+		fetch(`${this.API_URL}/sendTracks?id=${this.telegramId}`, {
 			method: 'POST',
 			headers: {
 		  		'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ class App extends React.Component {
                 console.log(this.telegramId);
 
 				if (this.telegramId === false || this.telegramId === 'false') {
-					const response = await fetch(`${API_URL}/getUser?id=${this.vkId}`).then(res => res.json());
+					const response = await fetch(`${this.API_URL}/getUser?id=${this.vkId}`).then(res => res.json());
 					console.log(response);
 					const permission = response.permission;
 					this.telegramId = response.telegramId;
@@ -73,7 +73,7 @@ class App extends React.Component {
 					console.log(req);
 				}
 
-				fetch(`${API_URL}/getTracks?id=${this.vkId}`)
+				fetch(`${this.API_URL}/getTracks?id=${this.vkId}`)
 					.then(res => res.json())
 					.then(result => {
 						this.pickedTracks = new Array(result.tracks.length)
