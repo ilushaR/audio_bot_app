@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,qDACI,iBAAkB,CAClB,SACJ,CAEA,oEACI,kBACJ","file":"main.7d402f3c.chunk.css","sourcesContent":[".SimpleCell .SimpleCell__after .Checkbox__icon .Icon {\r\n    color: transparent;\r\n    padding: 0;\r\n}\r\n\r\n.Checkbox__input:checked~.Checkbox__container .Checkbox__icon .Icon {\r\n    color: var(--white);\r\n}"]}
