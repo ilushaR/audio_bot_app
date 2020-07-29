@@ -42,7 +42,6 @@ class App extends React.Component {
     }
 
 	onCheckboxChange = (e) => {
-        console.log(e.currentTarget.checked);
 		const track = JSON.parse(e.currentTarget.dataset.track);
 		this.pickedTracks[track.index] = this.pickedTracks[track.index] ? null : { url: track.url, title: track.title, artist: track.artist };
         // this.setState({ isShowButton: !!this.filteredPickedTracks().length })
@@ -136,7 +135,7 @@ class App extends React.Component {
                                 href={ `https://t.me/ilushaR_bot?start=${this.vkId}-${this.hash}` }
                                 target='_blank'
                             >
-                                    Telegram Authorization 🔓
+                                Telegram Authorization 🔓
                             </Button>
                         </ModalCard>
                       </ModalRoot>)
@@ -145,17 +144,21 @@ class App extends React.Component {
 			<ConfigProvider scheme={ this.state.scheme }>
 				<View activePanel='main' modal={ modal }>
 					<Panel id='main'>
-                        <PanelHeader left={
-                            <PanelHeaderButton onClick={ async () => {
-                                // console.log(this.refs);
-                                // this.refs.forEach(checkbox => {
-                                //     console.log(checkbox);
-                                // })
-                                // this.pickedTracks = this.state.isAllChecked ? [] : this.state.tracks;
-                                // this.setState({ isAllChecked: !this.state.isAllChecked, isShowButton: !this.state.isAllChecked  });
-                            } 
-                            }>{ this.state.isAllChecked ? 'Отменить' : 'Выбрать' } все</PanelHeaderButton>
-                        }>
+                        <PanelHeader 
+                            left={
+                                <PanelHeaderButton onClick={ async () => {
+                                    // console.log(this.refs);
+                                    // this.refs.forEach(checkbox => {
+                                    //     console.log(checkbox);
+                                    // })
+                                    // this.pickedTracks = this.state.isAllChecked ? [] : this.state.tracks;
+                                    // this.setState({ isAllChecked: !this.state.isAllChecked, isShowButton: !this.state.isAllChecked  });
+                                } 
+                                }>
+                                    { this.state.isAllChecked ? 'Отменить' : 'Выбрать' } все
+                                </PanelHeaderButton>
+                            }
+                        >
                             Audio Bot
                         </PanelHeader>
                         { this.state.isLoading 
@@ -165,17 +168,18 @@ class App extends React.Component {
                                     <SimpleCell 
                                         key={ track.id }
                                         before={
-                                        <Card 
-                                            size='m' 
-                                            style={{ width: 40, height: 40, marginRight: 10, background: `url(${ track.album && track.album.thumb ? track.album.thumb.photo_68 : this.icon}) no-repeat center #e5ebf1`, backgroundSize: 'cover'}} 
-                                        />
-                                    } 
-                                    after={ <Checkbox 
-                                                data-track={JSON.stringify({ index, url: track.url, title: track.title, artist: track.artist })} 
-                                                onChange={ this.onCheckboxChange } /> } 
-                                    description={ track.artist } 
+                                            <Card 
+                                                size='m' 
+                                                style={{ width: 40, height: 40, marginRight: 10, background: `url(${ track.album && track.album.thumb ? track.album.thumb.photo_68 : this.icon}) no-repeat center #e5ebf1`, backgroundSize: 'cover'}} 
+                                            />
+                                        } 
+                                        after={ <Checkbox 
+                                                    data-track={JSON.stringify({ index, url: track.url, title: track.title, artist: track.artist })} 
+                                                    onChange={ this.onCheckboxChange } 
+                                                /> } 
+                                        description={ track.artist } 
                                     >
-                                    { track.title } 
+                                        { track.title } 
                                     </SimpleCell>
 						        )}
                               </Div>
